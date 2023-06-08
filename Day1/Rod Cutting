@@ -1,0 +1,23 @@
+int func(int ind,int tar,vector<int> &price,vector<vector<int>> &dp){
+	//base case
+	if(ind==0){
+		return tar*price[0];
+	}
+	if(dp[ind][tar]!=-1){
+		return dp[ind][tar];
+	}
+	int n_take = 0+func(ind-1,tar,price,dp);
+	int take = INT_MIN;
+	int rod_len = ind+1;
+	if(rod_len<=tar){
+		take = price[ind]+func(ind,tar-rod_len,price,dp);
+	}
+	return dp[ind][tar]=max(take,n_take);
+
+}
+int cutRod(vector<int> &price, int n)
+{
+	// Write your code here.
+	vector<vector<int>> dp(n,vector<int>(n+1,-1));
+	return func(n-1,n,price,dp);
+}
